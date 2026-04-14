@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <title>Creed Arcade | Play & Download Games – Installable Game Hub</title>
+  <meta name="description" content="Creed Arcade – Play free online games instantly. Install this app on your phone. If the game is not available, download it directly from Google Play.">
+  <meta name="keywords" content="creed games, play games online, download games, google play games, creed arcade app">
+  <meta name="author" content="Creed Arcade">
+  <meta name="theme-color" content="#0a0c12">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Creed Arcade">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Icons for install app -->
+  <link rel="apple-touch-icon" href="https://creedarcade.github.io/icons/icon-192.png">
+  
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="Creed Arcade – Play & Download Games">
+  <meta property="og:description" content="Install the Creed Arcade app on your phone. Play games or download from Google Play.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://creedarcade.github.io">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0c12;
+      color: #eef2ff;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1a1f2e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #f5b642;
+      border-radius: 10px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .navbar {
+      background: rgba(10, 12, 18, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(245, 182, 66, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFFFFF, #f5b642);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .logo span {
+      color: #f5b642;
+      background: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #ccd6f0;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .nav-links a:hover {
+      color: #f5b642;
+    }
+
+    /* Install banner */
+    .install-banner {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border-bottom: 2px solid #f5b642;
+      padding: 12px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .install-banner p {
+      margin: 0;
+      color: #f5b642;
+      font-weight: 500;
+    }
+    .install-btn {
+      background: #f5b642;
+      border: none;
+      padding: 8px 24px;
+      border-radius: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: inherit;
+      transition: 0.2s;
+    }
+    .install-btn:hover {
+      background: #ffcf6e;
+      transform: scale(1.02);
+    }
+    .hide-banner {
+      display: none;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 0 40px;
+      background: radial-gradient(circle at 30% 10%, #111827, #03050b);
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .hero .highlight {
+      color: #f5b642;
+    }
+    .hero p {
+      max-width: 700px;
+      margin: 0 auto;
+      color: #a5b4fc;
+      font-size: 1.1rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 2rem 0 1.5rem;
+      border-left: 5px solid #f5b642;
+      padding-left: 18px;
+    }
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .game-card {
+      background: #11161f;
+      border-radius: 28px;
+      border: 1px solid rgba(245, 182, 66, 0.25);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 10px 20px -5px rgba(0,0,0,0.5);
+    }
+    .game-card:hover {
+      transform: translateY(-8px);
+      border-color: #f5b642;
+      box-shadow: 0 20px 30px -12px rgba(245,182,66,0.2);
+    }
+    .game-preview {
+      background: #0f131c;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #1e2a3a;
+      position: relative;
+      overflow: hidden;
+    }
+    .game-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .game-card:hover .game-img {
+      transform: scale(1.05);
+    }
+    .game-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #f5b642;
+      color: #0a0a0a;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 4px 12px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      z-index: 2;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .game-info {
+      padding: 1.5rem;
+    }
+    .game-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .game-desc {
+      color: #9ca3af;
+      font-size: 0.85rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.4;
+    }
+    .game-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-play {
+      background: #f5b642;
+      border: none;
+      padding: 10px 20px;
+      font-weight: 700;
+      border-radius: 40px;
+      color: #0a0c12;
+      cursor: pointer;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+      flex: 1;
+      justify-content: center;
+    }
+    .btn-play:hover {
+      background: #ffcf6e;
+      transform: scale(0.98);
+    }
+    .btn-download {
+      background: #1e293b;
+      border: 1px solid #f5b64280;
+      padding: 10px 20px;
+      font-weight: 600;
+      border-radius: 40px;
+      color: #f5b642;
+      cursor: pointer;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+      flex: 1;
+      justify-content: center;
+      text-decoration: none;
+    }
+    .btn-download:hover {
+      background: #f5b642;
+      color: #0a0a0a;
+      border-color: #f5b642;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-content {
+      background: #0f121c;
+      border-radius: 32px;
+      max-width: 1100px;
+      width: 90%;
+      height: 80vh;
+      border: 1px solid #f5b642;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: #0b0e16;
+      border-bottom: 1px solid #2a2f3f;
+    }
+    .modal-header h3 {
+      font-size: 1.3rem;
+    }
+    .close-modal {
+      background: none;
+      border: none;
+      color: #f5b642;
+      font-size: 28px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .close-modal:hover {
+      color: #ffaa33;
+      transform: scale(1.1);
+    }
+    .game-iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      background: #000;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px 0;
+      border-top: 1px solid rgba(245,182,66,0.2);
+      margin-top: 40px;
+      color: #7c7f9b;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 680px) {
+      .nav-inner {
+        flex-direction: column;
+      }
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
+      .game-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Install App Banner (PWA) -->
+  <div id="installBanner" class="install-banner hide-banner">
+    <p>📱 Install Creed Arcade App → Play games offline & launch faster</p>
+    <button id="installAppBtn" class="install-btn">📲 INSTALL APP</button>
+  </div>
+
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <div class="logo">CREED <span>ARCADE</span></div>
+      <div class="nav-links">
+        <a href="#">HOME</a>
+        <a href="#games">GAMES</a>
+        <a href="#" id="infoLink">ABOUT</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <h1>PLAY. DOWNLOAD. <span class="highlight">INSTALL.</span></h1>
+      <p>Creed Arcade is now a installable app! Click "Install App" above to add to your home screen. Play games or download from Google Play.</p>
+    </div>
+  </section>
+
+  <div class="container" id="games">
+    <div class="section-title">🔥 FEATURED GAMES</div>
+    <div class="games-grid" id="gamesGrid"></div>
+  </div>
+
+  <div id="gameModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalGameTitle">Game Name</h3>
+        <button class="close-modal" id="closeModalBtn">&times;</button>
+      </div>
+      <iframe id="gameIframe" class="game-iframe" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 CREED ARCADE — Install this app on your phone for the best experience.</p>
+      <p>⚡ Creed Arcade | Play online or install from Google Play with one click.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Game database
+    const gamesList = [
+      {
+        id: 1,
+        title: "Subway Surfers",
+        description: "Dash, dodge trains and collect coins. Classic endless runner worldwide.",
+        image: "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0plS5o3zw=w240-h480-rw",
+        playable: true,
+        embedUrl: "https://html5.gamedistribution.com/7b5e5b7e5b7e4b5e8b5e7b5e7b5e7b5e/?gd_sdk_referrer_url=https://creedarcade.com",
+        downloadUrl: "https://play.google.com/store/apps/details?id=com.kiloo.subwaysurf",
+        badge: "Play Now"
+      },
+      {
+        id: 2,
+        title: "Temple Run 2",
+        description: "Escape the cursed temple, slide and turn in this epic adventure.",
+        image: "https://play-lh.googleusercontent.com/ksvJfNdrvzshgN4nX97zSox0nF8rTgtYmyqWrvPssL5kMRn0E4YbG_-9Q7q7W74Tv1E=w240-h480-rw",
+        playable: true,
+        embedUrl: "https://html5.gamedistribution.com/3f3b3b3f3b3f3b3f3b3f3b3f3b3f3b3f/?gd_sdk_referrer_url=creedarcade",
+        downloadUrl: "https://play.google.com/store/apps/details?id=com.imangi.templerun2",
+        badge: "Play"
+      },
+      {
+        id: 3,
+        title: "Among Us",
+        description: "Multiplayer deception game. Find the impostor or remain undetected.",
+        image: "https://play-lh.googleusercontent.com/1NfU6fX4VpU8q0Pp0l6z8tKVjqG0c6j6s5q0f6b8f7e5d4c3b2a1s9d8f7e6d5c4b3a2=w240-h480-rw",
+        playable: false,
+        embedUrl: "",
+        downloadUrl: "https://play.google.com/store/apps/details?id=com.innersloth.spacemafia",
+        badge: "Download"
+      },
+      {
+        id: 4,
+        title: "Genshin Impact",
+        description: "Open-world action RPG with stunning visuals. Massive adventure.",
+        image: "https://play-lh.googleusercontent.com/1mP3l-vC1l5Y9f5p7r3q0g6k2j4h8l6n0b2v4c6x8z0a2s4d6f8g0h2j4=w240-h480-rw",
+        playable: false,
+        embedUrl: "",
+        downloadUrl: "https://play.google.com/store/apps/details?id=com.miHoYo.GenshinImpact",
+        badge: "Get on Play"
+      },
+      {
+        id: 5,
+        title: "Candy Crush Saga",
+        description: "Match candies, solve puzzles, sweet & addictive gameplay.",
+        image: "https://play-lh.googleusercontent.com/8tL8a8L8a8L8a8L8a8L8a8L8a8L8a8L8a8L8a8L8a8L8a8L8a8L8a8L8a8=w240-h480-rw",
+        playable: true,
+        embedUrl: "https://html5.gamedistribution.com/4d4c4f4e4d4c4b4a494847464544434241/?gd_sdk_referrer_url=creedarcade",
+        downloadUrl: "https://play.google.com/store/apps/details?id=com.king.candycrushsaga",
+        badge: "Play"
+      },
+      {
+        id: 6,
+        title: "Free Fire",
+        description: "Battle royale shooter, 10-minute matches, intense action.",
+        image: "https://play-lh.googleusercontent.com/1q1m0l1k1j1h1g1f1e1d1c1b1a1z1y1x1w1v1u1t1s1r1q1p1o1n1m1l1k1j1i1h1g1f=w240-h480-rw",
+        playable: false,
+        embedUrl: "",
+        downloadUrl: "https://play.google.com/store/apps/details?id=com.dts.freefireth",
+        badge: "Install"
+      },
+      {
+        id: 7,
+        title: "Hill Climb Racing",
+        description: "Physics-based driving game, climb hills with crazy vehicles.",
+        image: "https://play-lh.googleusercontent.com/1n1m1l1k1j1i1h1g1f1e1d1c1b1a1z1y1x1w1v1u1t1s1r1q1p1o1n1m1l1k1j1i1h1g1f=w240-h480-rw",
+        playable: true,
+        embedUrl: "https://html5.gamedistribution.com/2a2b2c2d2e2f30313233343536373839/?gd_sdk_referrer_url=creedarcade",
+        downloadUrl: "https://play.google.com/store/apps/details?id=com.fingersoft.hillclimb",
+        badge: "Drive"
+      },
+      {
+        id: 8,
+        title: "Call of Duty: Mobile",
+        description: "Console-quality FPS on mobile, multiplayer & BR modes.",
+        image: "https://play-lh.googleusercontent.com/1o1n1m1l1k1j1i1h1g1f1e1d1c1b1a1z1y1x1w1v1u1t1s1r1q1p1o1n1m1l1k1j1i1h1g1f=w240-h480-rw",
+        playable: false,
+        embedUrl: "",
+        downloadUrl: "https://play.google.com/store/apps/details?id=com.activision.callofduty.shooter",
+        badge: "Download"
+      }
+    ];
+
+    const gamesGrid = document.getElementById('gamesGrid');
+    const modal = document.getElementById('gameModal');
+    const gameIframe = document.getElementById('gameIframe');
+    const modalTitle = document.getElementById('modalGameTitle');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    // PWA Installation
+    let deferredPrompt;
+    const installBanner = document.getElementById('installBanner');
+    const installBtn = document.getElementById('installAppBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBanner.classList.remove('hide-banner');
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          installBanner.classList.add('hide-banner');
+        }
+        deferredPrompt = null;
+      }
+    });
+
+    function openDownload(url, gameTitle) {
+      window.open(url, '_blank');
+      alert(`📱 "${gameTitle}" requires installation. Redirecting to Google Play to download the official game.`);
+    }
+
+    function handlePlay(game) {
+      if (game.playable && game.embedUrl && game.embedUrl.trim() !== "") {
+        modalTitle.innerText = game.title;
+        gameIframe.src = game.embedUrl;
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      } else {
+        openDownload(game.downloadUrl, game.title);
+      }
+    }
+
+    function renderGames() {
+      gamesGrid.innerHTML = '';
+      gamesList.forEach(game => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.innerHTML = `
+          <div class="game-preview">
+            <img class="game-img" src="${game.image}" alt="${game.title}" loading="lazy" onerror="this.src='https://placehold.co/400x200/1e293b/f5b642?text=${game.title.replace(/ /g, '+')}'">
+            <div class="game-badge">${game.badge}</div>
+          </div>
+          <div class="game-info">
+            <div class="game-title">${game.title}</div>
+            <div class="game-desc">${game.description}</div>
+            <div class="game-actions">
+              <button class="btn-play" data-id="${game.id}">🎮 PLAY NOW</button>
+              <a href="${game.downloadUrl}" target="_blank" class="btn-download">📲 DOWNLOAD (Google Play)</a>
+            </div>
+          </div>
+        `;
+        gamesGrid.appendChild(card);
+      });
+
+      document.querySelectorAll('.btn-play').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = parseInt(btn.getAttribute('data-id'));
+          const selectedGame = gamesList.find(g => g.id === id);
+          if (selectedGame) handlePlay(selectedGame);
+        });
+      });
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+      if (gameIframe.src) {
+        gameIframe.src = '';
+      }
+      document.body.style.overflow = '';
+    }
+
+    closeModalBtn.addEventListener('click', closeModal);
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    const infoLink = document.getElementById('infoLink');
+    if(infoLink) {
+      infoLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert("⚡ Creed Arcade: Install this app on your phone using the banner above. Play select HTML5 games directly. If a game isn't available, you'll be prompted to download it from Google Play.");
+      });
+    }
+
+    renderGames();
+
+    // Service Worker Registration for offline caching
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then(() => {
+        console.log('Service Worker registered');
+      }).catch(err => console.log('SW failed:', err));
+    }
+  </script>
+
+  <!-- Service Worker script for caching -->
+  <script>
+    // Dynamically create service worker if not exists (inline fallback)
+    if ('serviceWorker' in navigator && !window.swRegistered) {
+      window.swRegistered = true;
+      const swCode = `self.addEventListener('install', event => { self.skipWaiting(); }); self.addEventListener('fetch', event => { event.respondWith(fetch(event.request).catch(() => caches.match(event.request))); });`;
+      const blob = new Blob([swCode], {type: 'application/javascript'});
+      const url = URL.createObjectURL(blob);
+      navigator.serviceWorker.register(url).then(() => console.log('Dynamic SW registered'));
+    }
+  </script>
+</body>
+</html>
